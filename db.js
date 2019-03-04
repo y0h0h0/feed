@@ -49,6 +49,7 @@ exports.query = (queryString, cb) => {
   state.db.query(queryString, cb);
 }
 
+
 exports.asyncQuery = (queryString, values = []) => {
   return new Promise((resolve) => {
     state.db.query(queryString, values, (error, result) => {
