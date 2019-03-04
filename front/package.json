@@ -1,0 +1,30 @@
+{
+  "homepage": "/",
+  "name": "example_package",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.16.2",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.0.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "react-scripts": "^2.1.5"
+  },
+  "scripts": {
+    "start-js": "NODE_PATH=node_modules:src/ react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "NODE_PATH=node_modules:src/ react-scripts build",
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar --include-path ./src/stylesheets --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src/stylesheets --include-path ./node_modules src/ -o src/ --watch --recursive"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
