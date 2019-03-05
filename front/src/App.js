@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-
+import {getPosts} from 'Api';
 
 
 class App extends Component {
@@ -14,6 +14,12 @@ class App extends Component {
   componentDidMount() {
     console.log('App mounted at ', window.location);
     console.log( process.env );
+    this.gettt();
+  }
+
+  gettt = async () => {
+    let dam = await getPosts();
+    console.log('dam', dam)
   }
 
 

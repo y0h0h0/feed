@@ -3,13 +3,24 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const chalk = require('chalk');
 var bodyParser = require('body-parser');
-
+var db = require('./db');
 const app = express();
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+
+
+app.use((req, res, next) => { // CORS
+  res.append('Access-Control-Allow-Origin', ['*']);
+  res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.append('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+
 
 app.use('/', express.static('front/build'));
 
@@ -25,11 +36,10 @@ app.use('/api/*', (req, res) => {
 
 // Front-end SPA
 app.use('*', (req, res) => {
-  console.log(chalk.green('SENDING A STAR'))
   res.sendFile(__dirname + '/front/build/index.html');
 });
 
-var db = require('./db');
+
 
 db.connect((err)=>{
   if(err) return err;
