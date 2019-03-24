@@ -2,18 +2,58 @@ const express = require('express');
 const router = express.Router();
 const md5 = require('js-md5');
 const sendmail = require('sendmail')();
-var db = require('../db');
+var db = require('db');
 var { sendError , getUser , sendResult} = require('../functions');
+
+
+// const { getPost } = require('../models/posts');
+const postModels = require('models/posts');
 
 var multer  = require('multer')
 var upload = multer({ dest: 'attachments/' })
 
 
-router.post('/get', async (req,res)=>{
+router.get('/get', async (req,res)=>{
   let response = await db.asyncQuery('SELECT * from `feed_posts` WHERE `archived` = 0 ORDER by `id` DESC LIMIT 20');
   if(response.error) return sendError(res, 'Bad request');
   sendResult(res, response.result);
 });
+
+
+
+
+router.get('/getPost/:id', async (req,res)=>{
+
+  // let response = await postModels.getPost(req.params.id).catch((err) => {
+  //   console.log('EEEOOOEEEEE', err);
+  //   return sendError(res, err);
+  // });
+
+  let response = await postModels.getPost(req.params.id).catch((err) => {
+    console.log('EEEOOOEEEEE', err);
+    return sendError(res, err);
+  });
+
+
+  console.log("CONTINUE", response);
+
+
+
+
+
+  if(response.error) return sendError(res, response.error);
+  else return sendResult(res, response.result);
+});
+
+
+// router.get('/getPost/:id', async (req,res)=>{
+//   let response = await postModels.getPost(req.params.id);
+//   if(response.error) return sendError(res, response.error);
+//   else return sendResult(res, response.result);
+// });
+
+
+
 
 
 router.post('/add', async (req,res)=>{

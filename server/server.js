@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-
 app.use((req, res, next) => { // CORS
   res.append('Access-Control-Allow-Origin', ['*']);
   res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -21,14 +20,13 @@ app.use((req, res, next) => { // CORS
 });
 
 
+app.use(express.static(__dirname + '/front_build'));
 
-app.use('/', express.static('front/build'));
-
+app.use('/api/auth/', require('./api_controllers/auth.js'));
 app.use('/api/auth/', require('./api_controllers/auth.js'));
 app.use('/api/posts/', require('./api_controllers/posts.js'));
 
 app.use('/api/*', (req, res) => {
-  console.log(req)
   res.status(404).send('Wrong api endpoint');
 });
 
@@ -36,7 +34,7 @@ app.use('/api/*', (req, res) => {
 
 // Front-end SPA
 app.use('*', (req, res) => {
-  res.sendFile(__dirname + '/front/build/index.html');
+  res.sendFile(__dirname + '/front_build/index.html');
 });
 
 
@@ -46,7 +44,7 @@ db.connect((err)=>{
 
   app.listen(PORT, () => {
     console.clear();
-    console.log(chalk.bgMagenta.black(`Listening on ${ PORT }` ) + chalk.bgBlue.black(`==============` )    );
+    console.log(chalk.bgMagenta.black(` FEED SERVER `) + chalk.blue(` on port ${ PORT }` )    );
   })
 
 })
