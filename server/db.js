@@ -54,17 +54,7 @@ exports.asyncQuery = (queryString, values = []) => {
   return new Promise((resolve) => {
     state.db.query(queryString, values, (error, result) => {
       if(error) {
-
-        // resolve(new iError('SLQLDLEFL', 'oh blya'));
-        // resolve(new iError(error.code, error.sqlMessage));
         resolve(new iError('DB_ERROR', error.sqlMessage,500));
-        // resolve(new iError(error));
-        // resolve({
-        //   error:{
-        //     code:error.code,
-        //     message:error.sqlMessage
-        //   }
-        // });
       }
       else resolve(result);
     });

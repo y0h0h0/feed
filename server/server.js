@@ -23,7 +23,6 @@ app.use((req, res, next) => { // CORS
 app.use(express.static(__dirname + '/front_build'));
 
 app.use('/api/auth/', require('./api_controllers/auth.js'));
-app.use('/api/auth/', require('./api_controllers/auth.js'));
 app.use('/api/posts/', require('./api_controllers/posts.js'));
 
 app.use('/api/*', (req, res) => {
@@ -38,13 +37,10 @@ app.use('*', (req, res) => {
 });
 
 
-
 db.connect((err)=>{
   if(err) return err;
-
   app.listen(PORT, () => {
     console.clear();
     console.log(chalk.bgMagenta.black(` FEED SERVER `) + chalk.blue(` on port ${ PORT }` )    );
   })
-
 })

@@ -2,54 +2,71 @@ const db = require('db');
 const iError = require('helpers/iError');
 const md5 = require('js-md5');
 const sendmail = require('sendmail')();
+var { getUser } = require('../functions');
 
 const errors = {
-  AUTH_01: new iError('AUTH_01', 'You should provide a name'),
+  POST_01: new iError('POST_01', 'Bad text'),
+  POST_02: new iError('POST_02', 'Couldn\'t update the post. Probably wrong id'),
+  POST_03: new iError('POST_03', 'Couldn\'t delete the post. Probably wrong id'),
 }
 
 
 module.exports.get = () => {
   return new Promise(async resolve => {
     let posts = await db.asyncQuery('SELECT * from `feed_posts` WHERE `archived` = 0 ORDER by `id` DESC LIMIT 20');
-    return resolve(aUser);
+    return resolve(posts);
   });
 }
 
 
+module.exports.add = ({ token, text='' }) => {
+  return new Promise(async resolve => {
+      let user = await getUser(token);
+      if(user.isError) return resolve(user);
+      if(typeof text !== 'string' || !text.length) return resolve(errors.POST_01);
+      let respInsert = await db.asyncQuery(
+        'INSERT INTO `feed_posts` SET `authorid` = ? , `text` = ? , `datetime` = NOW()',
+        [user.id, text]);
+      if(respInsert.isError) return resolve(respInsert);
+      let respSelect = await db.asyncQuery(
+        'SELECT * FROM `feed_posts` WHERE `id`= ? AND `authorid`= ? LIMIT 1',
+        [respInsert.insertId, user.id]);
+      if(respSelect.isError) return resolve(respSelect);
+      return resolve(respSelect[0])
+  });
+}
 
 
+module.exports.update = ({ token, id, text='' }) => {
+  return new Promise(async resolve => {
+    let user = await getUser(token);
+    if(user.isError) return resolve(user);
+    if(typeof text !== 'string' || !text.length) return resolve(errors.POST_01);
+    let respUpdate = await db.asyncQuery(
+      'UPDATE `feed_posts` SET `text` = ? WHERE `authorid` = ? AND `id` = ? LIMIT 1',
+      [text , user.id, id]);
+      console.log(respUpdate)
+    if(respUpdate.isError) return resolve(respUpdate);
+    if(respUpdate.affectedRows === 0) return resolve(errors.POST_02)
+    let respSelect = await db.asyncQuery(
+      'SELECT * FROM `feed_posts` WHERE `id`= ? AND `authorid`= ? LIMIT 1',
+      [id, user.id]);
+    if(respSelect.isError) return resolve(respSelect);
+    return resolve(respSelect[0])
 
-// module.exports.getPost = (id) => {
-//   console.log('HRER')
-//
-//   return new Promise(async (resolve,reject) => {
-//     // if(!id)
-//
-//
-//     resolve(new Error('ddduufuufufufuf'));
-//      // reject({error:'No post id'});
-//
-//
-//
-//
-//     // let response = await db.asyncQuery('SELECT * from `feed_posts` WHERE `archived` = 0 AND `id` = ? ORDER by `id` DESC LIMIT 1', [id]);
-//     // if(response.error) resolve({error:'Bad request'});
-//     // if(response.result.length === 0) resolve({error:'No post found'});
-//     // resolve({result:response.result[0]});
-//     // resolve({result:true});
-//   });
-// }
+  });
+}
 
 
-
-// module.exports.getPost = (id) => {
-//   console.log('HRER')
-//
-//   return new Promise(async (resolve) => {
-//     if(!id) resolve({error:'No post id'});
-//     let response = await db.asyncQuery('SELECT * from `feed_posts` WHERE `archived` = 0 AND `id` = ? ORDER by `id` DESC LIMIT 1', [id]);
-//     if(response.error) resolve({error:'Bad request'});
-//     if(response.result.length === 0) resolve({error:'No post found'});
-//     resolve({result:response.result[0]});
-//   });
-// }
+module.exports.delete = ({ token, id }) => {
+  return new Promise(async resolve => {
+    let user = await getUser(token);
+    if(user.isError) return resolve(user);
+    let respUpdate = await db.asyncQuery(
+      'UPDATE `feed_posts` SET `archived` = 1 WHERE `authorid` = ? AND `id` = ? LIMIT 1',
+      [user.id, id]);
+    if(respUpdate.isError) return resolve(respUpdate);
+    if(respUpdate.affectedRows === 0) return resolve(errors.POST_03)
+    return resolve(true);
+  });
+}
