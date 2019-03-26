@@ -20,6 +20,13 @@ app.use((req, res, next) => { // CORS
 });
 
 
+app.use((req, res, next) => { // Just logs
+  console.log('req' , req.originalUrl);
+  next();
+});
+
+
+
 app.use(express.static(__dirname + '/front_build'));
 
 app.use('/api/auth/', require('./api_controllers/auth.js'));
@@ -33,6 +40,7 @@ app.use('/api/*', (req, res) => {
 
 // Front-end SPA
 app.use('*', (req, res) => {
+  console.log('hey')
   res.sendFile(__dirname + '/front_build/index.html');
 });
 

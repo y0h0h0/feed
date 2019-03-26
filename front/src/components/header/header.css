@@ -1,0 +1,22 @@
+.Header {
+  height: 60px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15); }
+  .Header > div {
+    width: 500px;
+    margin: 0 auto;
+    height: 60px; }
+    .Header > div > div {
+      float: left;
+      height: 60px; }
+    .Header > div > div:nth-of-type(1) {
+      width: 100px;
+      margin-left: 200px;
+      background: url("feedlogo.png") no-repeat center 5px;
+      background-size: 90px 50px; }
+    .Header > div > div:nth-of-type(2) {
+      width: 200px;
+      padding-top: 10px;
+      text-align: right; }
+      .Header > div > div:nth-of-type(2) > div {
+        font-weight: bold; }

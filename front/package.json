@@ -8,7 +8,8 @@
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
     "react": "^15.6.1",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "zasz": "0.0.4"
   },
   "devDependencies": {
     "react-scripts": "^2.1.5"

@@ -1,3 +1,108 @@
-.pageIndex {
-  background: grey;
+@mixin transition() {
+  -webkit-transition: all ease-out 0.2s, background ease-out 0.2s;
+  -moz-transition: all ease-out 0.2s, background ease-out 0.2s;
+  -o-transition: all ease-out 0.2s, background ease-out 0.2s;
+  transition: all ease-out 0.2s, background ease-out 0.2s;
 }
+
+*, *:after, *:before {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+img {border:none;}
+
+body {
+  margin: 0;
+  min-width: 620px;
+  overflow-y: scroll;
+  overflow-x: auto;
+  font-family: 'OpenSans';
+  font-size: 13px;
+  line-height:1.5;
+  font-weight: 'normal';
+  color: #2d3e50;
+  background-color:#fff;
+}
+
+
+.App {}
+
+
+.topPanel {
+  height: 300px;
+  &>div {
+    width: 500px;
+    margin: 0 auto;
+    background: pink;
+  }
+}
+
+.postList {
+  border-top: 1px #eaeaea solid;
+  border-bottom: 1px #eaeaea solid;
+  background: #fafbfc;
+  &>div {
+    width: 500px;
+    margin: -50px auto;
+
+  }
+}
+
+
+.footer {
+    &>div {
+      width: 500px;
+      height: 160px;
+      margin: 0 auto;
+      padding-top:70px;
+
+    }
+}
+
+
+a {
+  width:150px;
+  padding-top: 10px;
+  text-decoration: none;
+  color:#2da6c7;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+.button {
+  @include transition();
+  width: 200px;
+  background: #2897b8;
+  color:#fff;
+  text-transform: uppercase;
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+  &:hover {
+    background: #31b4d7;
+  }
+
+}
+
+
+input, textarea {
+  @include transition();
+  width:100%;
+  border: 1px solid #ddd;
+  outline: none;
+  border-radius: 5px;
+  resize:none;
+  padding: 3px 5px;
+  margin-bottom: 10px;
+  font-size: 13px;
+
+  &:focus {
+    border: 1px solid #31b4d7;
+  }
+}
+
+input {height: 30px;text-align: center;}
+textarea {height: 80px;}

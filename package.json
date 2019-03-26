@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_PATH=node_modules:server/ nodemon server/server.js"
+    "start": "NODE_PATH=node_modules:server/ nodemon server/server.js --ignore front/"
   },
   "repository": {
     "type": "git",
