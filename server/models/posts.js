@@ -15,15 +15,16 @@ module.exports.get = () => {
   return new Promise(async resolve => {
     let posts = await db.asyncQuery('SELECT `id`,`authorid`,`text`,`datetime` from `feed_posts` WHERE `archived` = 0 ORDER by `id` DESC LIMIT 20');
     if(posts.isError) return resolve(posts);
-
-    let ids = [];
-    posts.forEach(item => {
-      if(ids.indexOf(item.authorid)<0) ids.push(item.authorid);
-    });
-    let resp = await db.asyncQuery('SELECT `id`,`name` from `feed_users` WHERE `id` IN ('+ ids.join(', ') +') ');
-    let idsAsObj = {};
-    resp.forEach(item => {idsAsObj[item.id] = item.name})
-    posts.forEach(item => {item['authorname'] = idsAsObj[item.authorid]})
+    if(posts.length>0) {
+      let ids = [];
+      posts.forEach(item => {
+        if(ids.indexOf(item.authorid)<0) ids.push(item.authorid);
+      });
+      let resp = await db.asyncQuery('SELECT `id`,`name` from `feed_users` WHERE `id` IN ('+ ids.join(', ') +') ');
+      let idsAsObj = {};
+      resp.forEach(item => {idsAsObj[item.id] = item.name})
+      posts.forEach(item => {item['authorname'] = idsAsObj[item.authorid]})
+    }
     return resolve(posts);
   });
 }

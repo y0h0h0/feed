@@ -5,8 +5,8 @@ import models from 'models';
 
 function request(method, path, params) {
   return new Promise((resolve) => {
-
-      let apiServer = process.env.NODE_ENV==='development' ? 'http://localhost:5000/api/' : 'https://warhound.herokuapp.com/api/';
+    
+      let apiServer = process.env.NODE_ENV==='development' ? 'http://localhost:5000/api/' : window.location.origin+'/api/';
 
       axios[method](apiServer + path, params)
       .then((response) => {

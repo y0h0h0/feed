@@ -16,13 +16,16 @@ app.use((req, res, next) => { // CORS
   res.append('Access-Control-Allow-Origin', ['*']);
   res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.append('Access-Control-Allow-Headers', 'Content-Type');
+  // console.log(req)
   next();
 });
 
 
 app.use((req, res, next) => { // Just logs
   console.log('req' , req.originalUrl);
+  // console.log('req' , req.originalUrl);
   next();
+  console.log('---------------')
 });
 
 
@@ -50,5 +53,6 @@ db.connect((err)=>{
   app.listen(PORT, () => {
     console.clear();
     console.log(chalk.bgMagenta.black(` FEED SERVER `) + chalk.blue(` on port ${ PORT }` )    );
+    console.warn({da:123, kookoo: ['12','32',23], koooo: true})
   })
 })
