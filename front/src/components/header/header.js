@@ -10,7 +10,7 @@ export default (props) =>
         {store.user.loggedIn &&
           <div>
             <div>{store.user.name}</div>
-            <a href="javascript:void(0)" onClick={() => Api.logout()}>Logout</a>
+            <div onClick={() => Api.logout()}>Logout</div>
           </div>
         }
       </div>

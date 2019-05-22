@@ -5,18 +5,48 @@ import models from 'models';
 
 function request(method, path, params) {
   return new Promise((resolve) => {
-    
+
       let apiServer = process.env.NODE_ENV==='development' ? 'http://localhost:5000/api/' : window.location.origin+'/api/';
+
+
+
+      // axios[method](apiServer + path, params)
+      // .then((response) => {
+      //   console.log('>2', response.data)
+      //   return resolve({result:response.data.result})
+      // }, (error) => {
+      //   console.warn(error)
+      //   console.log(JSON.stringify(error, ["message", "arguments", "type", "name"]));
+      //   if(error.message === 'Network Error') return resolve({error:error.message})
+      //   else return resolve({error:error.response.data})
+      // })
+
+
 
       axios[method](apiServer + path, params)
       .then((response) => {
         console.log('>2', response.data)
         return resolve({result:response.data.result})
-      }, (error) => {
+      }).catch(error => {
         console.warn(error)
-        return resolve({error:error.response.data})
+        console.warn('resp', error.response)
+        console.log(JSON.stringify(error, ["message", "arguments", "type", "name"]));
+        if(error.message === 'Network Error') return resolve({error:error.message})
+        else return resolve({error:error.response.data})
       })
+
+
+
+
+
+
     });
+
+
+
+
+
+
 }
 
 
