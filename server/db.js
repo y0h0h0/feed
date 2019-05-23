@@ -17,6 +17,7 @@ var sshConf = {
   // keepaliveInterval:120000
 };
 var sqlConf = {
+  host:'localhost',
   user: process.env.SQL_USER,
   password: process.env.SQL_PASS,
   database: process.env.SQL_DB,
