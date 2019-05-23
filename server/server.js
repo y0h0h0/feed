@@ -53,6 +53,5 @@ db.connect((err)=>{
   app.listen(PORT, () => {
     console.clear();
     console.log(chalk.bgMagenta.black(` FEED SERVER `) + chalk.blue(` on port ${ PORT }` )    );
-    console.warn({da:123, kookoo: ['12','32',23], koooo: true})
   })
 })
