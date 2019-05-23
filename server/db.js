@@ -34,6 +34,7 @@ exports.connect = (cb) => {
 
   var ssh = new SSH2Client();
   ssh.on('ready', function() {
+    console.log('>> SSH >> ', new Date(), ' Connection opened');
     ssh.forwardOut(
       '127.0.0.1',
       24000,
@@ -47,6 +48,17 @@ exports.connect = (cb) => {
       }
     );
   });
+
+  ssh.on('error', function(error) {
+    console.log('>> SSH >> ', new Date(), ' Connection ERROR', error);
+  });
+  ssh.on('end', function() {
+    console.log('>> SSH >> ', new Date(), ' Connection END');
+  });
+  ssh.on('close', function(isError) {
+    console.log('>> SSH >> ', new Date(), ' Connection CLOSED', isError);
+  });
+
   ssh.connect(sshConf);
 }
 

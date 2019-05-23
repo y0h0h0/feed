@@ -11,6 +11,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+console.clear();
+
 
 app.use((req, res, next) => { // CORS
   res.append('Access-Control-Allow-Origin', ['*']);
@@ -51,7 +53,6 @@ app.use('*', (req, res) => {
 db.connect((err)=>{
   if(err) return err;
   app.listen(PORT, () => {
-    console.clear();
     console.log(chalk.bgMagenta.black(` FEED SERVER `) + chalk.blue(` on port ${ PORT }` )    );
   })
 })
