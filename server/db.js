@@ -14,8 +14,8 @@ var sshConf = {
   port: process.env.SSH_PORT,
   username: process.env.SSH_USER,
   password: process.env.SSH_PASS,
-  keepaliveInterval:20000,
-  readyTimeout:30000
+  keepaliveInterval:10000,
+  readyTimeout:20000
 };
 var sqlConf = {
   user: process.env.SQL_USER,
