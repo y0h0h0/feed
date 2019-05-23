@@ -18,7 +18,10 @@ var sshConf = {
 var sqlConf = {
   user: process.env.SQL_USER,
   password: process.env.SQL_PASS,
-  database: process.env.SQL_DB
+  database: process.env.SQL_DB,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 };
 
 var state = {
@@ -38,7 +41,7 @@ exports.connect = (cb) => {
       function(err, stream) {
         if (err) return cb(err);
         sqlConf.stream = stream;
-        state.db = mysql2.createConnection(sqlConf)
+        state.db = mysql2.createPool(sqlConf)
         cb();
       }
     );
