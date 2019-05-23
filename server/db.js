@@ -26,14 +26,24 @@ var sqlConf = {
 };
 
 var state = {
-  db:null
+  db:null,
+  ssh:null
 }
+
+
+
+
 
 exports.connect = (cb) => {
   if(state.db) return cb()
 
   var ssh = new SSH2Client();
   ssh.on('ready', function() {
+    state.ssh = ssh;
+    console.log(' ')
+    console.log(' ')
+    console.log(' ')
+    console.log(' ')
     console.log('>> SSH >> ', new Date(), ' Connection opened');
     ssh.forwardOut(
       '127.0.0.1',
@@ -44,6 +54,8 @@ exports.connect = (cb) => {
         if (err) return cb(err);
         sqlConf.stream = stream;
         state.db = mysql2.createPool(sqlConf)
+        // console.log(state.db);
+        console.log(state.ssh);
         cb();
       }
     );
@@ -62,18 +74,26 @@ exports.connect = (cb) => {
   ssh.connect(sshConf);
 }
 
+
+
+
+
+
+
 exports.query = (queryString, cb) => {
   state.db.query(queryString, cb);
 }
 
+
+
+
 exports.asyncQuery = (queryString, values = []) => {
   return new Promise((resolve) => {
     // console.log('QUERY:', queryString, 'values: ', values)
-    console.log('a query to db')
+    console.log('a query to db -- is closed:', state.db._closed, ' ssh events: ', state.ssh._eventsCount);
     state.db.query(queryString, values, (error, result) => {
       if(error) {
         console.warn('ERROR')
-        console.warn(error.sqlMessage)
         console.warn(error)
         resolve(new iError('DB_ERROR', error.sqlMessage,500));
       }
