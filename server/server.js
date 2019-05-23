@@ -24,10 +24,11 @@ app.use((req, res, next) => { // CORS
 
 
 app.use((req, res, next) => { // Just logs
-  console.log('req' , req.originalUrl);
+  if(req.originalUrl === '/') console.log('a request /')
+  // console.log('req' , req.originalUrl);
   // console.log('req' , req.originalUrl);
   next();
-  console.log('---------------')
+  // console.log('---------------')
 });
 
 
@@ -45,7 +46,7 @@ app.use('/api/*', (req, res) => {
 
 // Front-end SPA
 app.use('*', (req, res) => {
-  console.log('hey')
+  // console.log('hey')
   res.sendFile(__dirname + '/front_build/index.html');
 });
 

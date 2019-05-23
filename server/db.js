@@ -68,7 +68,8 @@ exports.query = (queryString, cb) => {
 
 exports.asyncQuery = (queryString, values = []) => {
   return new Promise((resolve) => {
-    console.log('QUERY:', queryString, 'values: ', values)
+    // console.log('QUERY:', queryString, 'values: ', values)
+    console.log('a query to db')
     state.db.query(queryString, values, (error, result) => {
       if(error) {
         console.warn('ERROR')
