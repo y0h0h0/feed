@@ -58,7 +58,7 @@ class App extends Component {
           <div>
             <div>&copy; Romka 2019</div>
             <div>a test project</div>
-            <div>v0.02</div>
+            <div>v0.03</div>
           </div>
         </div>
 

@@ -11,27 +11,17 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-console.clear();
-
-
 app.use((req, res, next) => { // CORS
   res.append('Access-Control-Allow-Origin', ['*']);
   res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.append('Access-Control-Allow-Headers', 'Content-Type');
-  // console.log(req)
   next();
 });
-
 
 app.use((req, res, next) => { // Just logs
-  if(req.originalUrl === '/') console.log('a request /')
-  // console.log('req' , req.originalUrl);
-  // console.log('req' , req.originalUrl);
+  console.log(req.originalUrl)
   next();
-  // console.log('---------------')
 });
-
-
 
 app.use(express.static(__dirname + '/front_build'));
 
@@ -42,18 +32,15 @@ app.use('/api/*', (req, res) => {
   res.status(404).send('Wrong api endpoint');
 });
 
-
-
 // Front-end SPA
 app.use('*', (req, res) => {
-  // console.log('hey')
   res.sendFile(__dirname + '/front_build/index.html');
 });
-
 
 db.connect((err)=>{
   if(err) return err;
   app.listen(PORT, () => {
+    console.clear();
     console.log(chalk.bgMagenta.black(` FEED SERVER `) + chalk.blue(` on port ${ PORT }` )    );
   })
 })
