@@ -30,6 +30,7 @@ exports.connect = (cb) => {
 }
 
 exports.query = (queryString, cb) => {
+  console.log(queryString)
   state.db.query(queryString, cb);
 }
 
