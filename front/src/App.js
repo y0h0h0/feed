@@ -56,9 +56,9 @@ class App extends Component {
 
         <div className="footer">
           <div>
-            <div>&copy; Romka 2019</div>
+            <div>&copy; Romka 2019-2020</div>
             <div>a test project</div>
-            <div>v0.03</div>
+            <div>v0.03.1</div>
           </div>
         </div>
 
