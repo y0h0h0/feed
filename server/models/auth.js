@@ -80,6 +80,9 @@ module.exports.login = ({ login, password }) => {
     let result = await db.asyncQuery(
       'SELECT `sid` FROM `feed_users` WHERE `confirmed` = 1 AND `email`= ? AND `password` = ? LIMIT 1',
       [login , password]);
+    console.log(' --------- ')
+    console.log(' ', result)
+    console.log(' --------- ')
     if(result.length === 0) return resolve(errors.CNFRM_05);
     return resolve(result[0].sid)
   });
