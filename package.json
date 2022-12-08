@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/y0h0h0/feed#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "chalk": "^2.4.2",
     "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "js-md5": "^0.7.3",
     "multer": "^1.4.1",
     "mysql": "^2.16.0",
